@@ -1,5 +1,13 @@
 from .news import NewsCollector
 from .indices import IndexCollector
 from .metals import MetalsCollector
+from .sentiment import SentimentIndexCollector
+from .global_index import GlobalIndexCollector
 
-__all__ = ["NewsCollector", "IndexCollector", "MetalsCollector"]
+__all__ = [
+    "NewsCollector",
+    "IndexCollector", 
+    "MetalsCollector",
+    "SentimentIndexCollector",
+    "GlobalIndexCollector"
+]
