@@ -1,14 +1,16 @@
 # AKShare 财经新闻接口完整清单
 
-## ✅ 已实现的接口（7个）
+## ✅ 已实现的接口（9个）
 
 ### 📰 新闻资讯类
 
 | 接口名称 | 方法名 | 数据源 | 更新频率 | 主要字段 |
 |---------|--------|--------|----------|---------|
-| `news_economic_baidu` | `get_economic_calendar()` | 百度财经 | 实时 | 日期、时间、地区、事件、公布、预期、前值、重要性 |
+| `stock_info_global_cls` | `get_international_news()` | 财联社 | 实时 | 发布时间、标题、内容、来源 |
 | `news_cctv` | `get_cctv_news()` | 央视新闻 | 每日 | 日期、标题、内容 |
 | `futures_news_shmet` | `get_futures_news()` | 上海金属网 | 实时 | 发布时间、内容 |
+| `macro_china_cpi_yearly` | `get_cpi_data()` | 国家统计局 | 月度 | 日期、今值、预测值、前值 |
+| `stock_individual_info_em` | `get_stock_info()` | 东方财富 | 实时 | item, value |
 
 ### 📊 研究报告类
 
@@ -24,10 +26,11 @@
 | `news_trade_notify_dividend_baidu` | `get_dividend_notice()` | 百度 | 实时 | 股票代码、除权日、分红、送股、转增 |
 | `news_report_time_baidu` | `get_earnings_calendar()` | 百度 | 实时 | 股票代码、财报类型、发布时间、市值 |
 
-## ❌ 不可用的接口（2个）
+## ❌ 不可用的接口（3个）
 
 | 接口名称 | 原因 |
 |---------|------|
+| `news_economic_baidu` | API 网络请求失败 (Connection Error) |
 | `stock_news_em` | API 返回 JSON 解析错误 |
 | `index_news_sentiment_scope` | API 返回 JSON 解析错误 |
 | `stock_news_main_cx` | API 404 错误（财新接口已失效） |

@@ -6,16 +6,7 @@ class NewsCollector:
     Financial News Collector using AKShare.
     """
 
-    def get_economic_calendar(self) -> pd.DataFrame:
-        """
-        获取百度财经日历数据（经济事件、数据发布等）.
-        返回字段：日期、时间、地区、事件、公布、预期、前值、重要性
-        """
-        try:
-            return ak.news_economic_baidu()
-        except Exception as e:
-            print(f"Error fetching economic calendar: {e}")
-            return pd.DataFrame()
+
 
     def get_cctv_news(self) -> pd.DataFrame:
         """
@@ -28,20 +19,7 @@ class NewsCollector:
             print(f"Error fetching CCTV news: {e}")
             return pd.DataFrame()
     
-    def get_stock_news(self, symbol: str = "000001") -> pd.DataFrame:
-        """
-        获取东方财富个股新闻资讯.
-        
-        Args:
-            symbol: 股票代码，如 "000001"（平安银行）、"600000"（浦发银行）
-        
-        返回字段：关键词、新闻标题、新闻内容、发布时间、文章来源、新闻链接
-        """
-        try:
-            return ak.stock_news_em(symbol=symbol)
-        except Exception as e:
-            print(f"Error fetching stock news for {symbol}: {e}")
-            return pd.DataFrame()
+
     
     def get_futures_news(self) -> pd.DataFrame:
         """
@@ -98,4 +76,37 @@ class NewsCollector:
             return ak.news_report_time_baidu()
         except Exception as e:
             print(f"Error fetching earnings calendar: {e}")
+            return pd.DataFrame()
+
+    def get_international_news(self) -> pd.DataFrame:
+        """
+        获取财联社-国际财经新闻 (实时更新).
+        返回字段：发布时间、标题、内容、来源等
+        """
+        try:
+            return ak.stock_info_global_cls()
+        except Exception as e:
+            print(f"Error fetching international news: {e}")
+            return pd.DataFrame()
+
+    def get_cpi_data(self) -> pd.DataFrame:
+        """
+        获取中国CPI年度数据 (替代不稳定的日历接口).
+        返回字段：日期、今值、预测值、前值
+        """
+        try:
+            return ak.macro_china_cpi_yearly()
+        except Exception as e:
+            print(f"Error fetching CPI data: {e}")
+            return pd.DataFrame()
+
+    def get_stock_info(self, symbol: str = "000001") -> pd.DataFrame:
+        """
+        获取个股基本信息 (替代不稳定的个股新闻接口).
+        返回字段：item, value
+        """
+        try:
+            return ak.stock_individual_info_em(symbol=symbol)
+        except Exception as e:
+            print(f"Error fetching stock info: {e}")
             return pd.DataFrame()

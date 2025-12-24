@@ -29,10 +29,10 @@ def main():
     
     results = {}
     
-    # 1. 百度财经日历
-    results['news_economic_baidu'] = test_api(
-        'news_economic_baidu - 百度财经日历',
-        ak.news_economic_baidu
+    # 1. 中国CPI数据 (替代 百度财经日历)
+    results['macro_china_cpi_yearly'] = test_api(
+        'macro_china_cpi_yearly - 中国CPI数据',
+        ak.macro_china_cpi_yearly
     )
     
     # 2. 央视新闻联播
@@ -47,10 +47,10 @@ def main():
         ak.futures_news_shmet
     )
     
-    # 4. 东方财富个股新闻
-    results['stock_news_em'] = test_api(
-        'stock_news_em - 东方财富个股新闻',
-        ak.stock_news_em,
+    # 4. 个股基本信息 (替代 东方财富个股新闻)
+    results['stock_individual_info_em'] = test_api(
+        'stock_individual_info_em - 东方财富个股信息',
+        ak.stock_individual_info_em,
         symbol="000001"
     )
     
@@ -76,6 +76,12 @@ def main():
     results['news_report_time_baidu'] = test_api(
         'news_report_time_baidu - 百度财报时间表',
         ak.news_report_time_baidu
+    )
+
+    # 9. 国际财经新闻
+    results['stock_info_global_cls'] = test_api(
+        'stock_info_global_cls - 财联社国际财经新闻',
+        ak.stock_info_global_cls
     )
     
     # 总结
