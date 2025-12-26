@@ -110,3 +110,47 @@ class NewsCollector:
         except Exception as e:
             print(f"Error fetching stock info: {e}")
             return pd.DataFrame()
+
+    def get_major_institution_news(self) -> pd.DataFrame:
+        """
+        获取主要国际机构（高盛、摩根大通、路透）关于中国的消息.
+        基于 get_international_news 进行关键词筛选.
+        
+        关键词逻辑: (机构名) AND (中国相关)
+        机构: 高盛, 摩根, 路透, Goldman, JPMorgan, Reuters
+        话题: 中国, 华, CN, China
+        
+        Returns:
+            DataFrame: 包含筛选后的新闻
+        """
+        try:
+            df = self.get_international_news()
+            if df.empty:
+                return df
+                
+            # 定义关键词
+            sources = ["高盛", "摩根", "路透", "Goldman", "JPMorgan", "Reuters"]
+            topics = ["中国", "华", "CN", "China"]
+            
+            # 构造筛选掩码
+            # 将标题和内容列转为字符串并拼接，方便统一搜索 (如果只有标题则只搜标题)
+            # 注意：get_international_news 返回字段可能有 '标题', '内容'
+            search_text = pd.Series("", index=df.index)
+            if '标题' in df.columns:
+                search_text = search_text + df['标题'].astype(str)
+            if '内容' in df.columns:
+                search_text = search_text + " " + df['内容'].astype(str)
+                
+            # source_mask: 包含任一机构关键词
+            source_mask = search_text.str.contains('|'.join(sources), case=False, na=False)
+            
+            # topic_mask: 包含任一话题关键词
+            topic_mask = search_text.str.contains('|'.join(topics), case=False, na=False)
+            
+            # 最终筛选
+            filtered_df = df[source_mask & topic_mask].copy()
+            return filtered_df
+            
+        except Exception as e:
+            print(f"Error fetching major institution news: {e}")
+            return pd.DataFrame()

@@ -83,6 +83,45 @@ def main():
         'stock_info_global_cls - 财联社国际财经新闻',
         ak.stock_info_global_cls
     )
+
+    # 10. 国际机构中国消息
+    collector = ak.stock_info_global_cls
+    # 由于我们需要测试的是 NewsCollector 的方法，这里需要实例化 collector 对象或者模拟
+    # 为了保持原有 test_api 的风格，我们稍微变通一下，这里实际上我们应该引入 NewsCollector 来测试
+    # 但现有文件结构是从 ak 直接调用的。让我们先简单测试 ak 接口，
+    # 而 get_major_institution_news 是我们自定义在 NewsCollector 里的。
+    # 所以我们需要实例化 NewsCollector。
+    
+    print(f"\n{'='*80}")
+    print("测试自定义方法: get_major_institution_news")
+    print(f"{'='*80}")
+    try:
+        from src.collectors.news import NewsCollector
+        nc = NewsCollector()
+        df = nc.get_major_institution_news()
+        if isinstance(df, pd.DataFrame):
+            print(f"✅ 方法调用成功，返回结果条数: {len(df)}")
+            if not df.empty:
+                print(f"列名: {df.columns.tolist()}")
+                print(f"前3条数据:\n{df.head(3)}")
+            else:
+                print("⚠️  无匹配数据 (当前可能无相关新闻)")
+            results['get_major_institution_news'] = True
+        else:
+            print("❌ 返回类型错误")
+            results['get_major_institution_news'] = False
+    except ImportError:
+        # 为了兼容如果在某些环境下跑路径问题，尝试动态添加路径
+        import sys, os
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+        from src.collectors.news import NewsCollector
+        nc = NewsCollector()
+        df = nc.get_major_institution_news()
+        print(f"✅ 方法调用成功 (fix import)，返回结果条数: {len(df)}")
+        results['get_major_institution_news'] = True
+    except Exception as e:
+        print(f"❌ 错误: {e}")
+        results['get_major_institution_news'] = False
     
     # 总结
     print(f"\n\n{'='*80}")
