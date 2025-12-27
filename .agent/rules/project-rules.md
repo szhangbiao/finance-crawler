@@ -1,4 +1,4 @@
----
+﻿---
 trigger: always_on
 ---
 
@@ -6,7 +6,7 @@ trigger: always_on
 
 ## 核心约束
 
-### 技术栈 (不可更改)
+### 技术栈
 - **Python版本**: 必须使用 Python 3.13+
 - **包管理器**: 只能使用 `uv`,禁止使用 pip/poetry
 - **数据源**: 目前使用 AKShare 库，后续考虑加入其他数据源
@@ -53,10 +53,10 @@ class XxxCollector:
 ```
 
 **禁止的做法**:
-- ❌ 不要使用其他数据源库
-- ❌ 不要在采集器中做复杂的数据处理
-- ❌ 不要忽略异常处理
-- ❌ 不要在采集器中写死配置参数
+-  不要使用其他数据源库
+-  不要在采集器中做复杂的数据处理
+-  不要忽略异常处理
+-  不要在采集器中写死配置参数
 
 ### 2. 命名规范 (严格)
 
@@ -90,9 +90,9 @@ def get_data(self):
 ```
 
 **不允许**:
-- ❌ 裸露的 API 调用(不加try-except)
-- ❌ 传播异常到上层(除非明确设计)
-- ❌ 静默失败(不打印错误信息)
+-  裸露的 API 调用(不加try-except)
+-  传播异常到上层(除非明确设计)
+-  静默失败(不打印错误信息)
 
 ### 4. 文档规范
 
@@ -117,18 +117,18 @@ def get_data(self) -> pd.DataFrame:
 
 ### 添加新采集器时必须:
 
-1. ✅ 在 `src/collectors/` 创建新文件
-2. ✅ 实现采集器类,遵循命名和结构规范
-3. ✅ 在 `src/collectors/__init__.py` 中导入和导出
-4. ✅ 创建测试文件 `tests/test_xxx.py`
-5. ✅ 创建文档 `docs/` (API文档或使用指南)
+1.  在 `src/collectors/` 创建新文件
+2.  实现采集器类,遵循命名和结构规范
+3.  在 `src/collectors/__init__.py` 中导入和导出
+4.  创建测试文件 `tests/test_xxx.py`
+5.  创建文档 `docs/` (API文档或使用指南)
 
 ### 修改现有代码时必须:
 
-1. ✅ 保持向后兼容
-2. ✅ 更新相关文档
-3. ✅ 测试修改后的功能
-4. ✅ 保持代码风格一致
+1.  保持向后兼容
+2.  更新相关文档
+3.  测试修改后的功能
+4.  保持代码风格一致
 
 ---
 
@@ -155,9 +155,9 @@ except Exception as e:
 ```
 
 **禁止**:
-- ❌ 不要硬编码接口参数
-- ❌ 不要假设接口永远可用
-- ❌ 不要忽略数据验证
+-  不要硬编码接口参数
+-  不要假设接口永远可用
+-  不要忽略数据验证
 
 ---
 
@@ -179,11 +179,34 @@ except Exception as e:
 3. **NewsCollector** - 新闻采集
 4. **IndexCollector** - A股指数
 5. **MetalsCollector** - 贵金属
+6. **ShishixinwenCollector** - 实事新闻
+   - 采集全球快讯及 AI 深度解析数据
+7. **CalendarCollector** - 财经日历
+   - 经济数据、央行利率、期指交割日
+8. **IntradayCollector** - 日内高频
+   - 获取指数/个股分钟线,支持 HAR 模型
 
 ### 添加新功能时:
 - 先检查是否已有类似功能
 - 参考现有采集器的实现模式
 - 保持API设计的一致性
+
+---
+
+## 已实现的处理器清单
+
+### 核心处理器:
+
+1. **NewsProcessor** - 新闻清洗
+   - 语义去重、投资标的相关性过滤
+2. **VolatilityProcessor** - 波动率预测
+   - 实现 HAR (Heterogeneous Autoregressive) 模型
+3. **DomesticAdvisorProcessor** - 国内投顾
+   - 整合沪深300、黄金、HAR预警及情绪
+4. **InternationalAdvisorProcessor** - 国际投顾
+   - 专注于美、日、越市场的趋势分析
+5. **StrategyAdvisorProcessor** - 策略中枢
+   - 聚合多方数据并生成 AI 投资决策 Prompt
 
 ---
 
@@ -205,9 +228,9 @@ uv run python tests/test_xxx.py
 ```
 
 **禁止使用**:
-- ❌ `pip install` 
-- ❌ `python -m pip`
-- ❌ `poetry`
+-  pip install 
+-  python -m pip
+-  poetry
 
 ---
 
@@ -215,54 +238,54 @@ uv run python tests/test_xxx.py
 
 ### src/collectors/
 - 每个采集器一个文件
-- 文件名小写加下划线: `global_index.py`
-- `__init__.py` 必须导出所有采集器
+- 文件名小写加下划线: global_index.py
+- __init__.py 必须导出所有采集器
 
 ### tests/
-- 测试文件: `test_xxx.py`
-- 示例文件: `example_xxx.py`
-- 演示文件: `demo_xxx.py`
+- 测试文件: test_xxx.py
+- 示例文件: example_xxx.py
+- 演示文件: demo_xxx.py
 
 ### docs/
-- API文档: `xxx_apis.md` 或 `xxx_REPORT.md`
-- 使用指南: `Xxx使用指南.md`
+- API文档: xxx_apis.md 或 xxx_REPORT.md
+- 使用指南: Xxx使用指南.md
 
 ---
 
 ## 性能和质量要求
 
 ### 代码质量:
-- ✅ 所有公开方法必须有docstring
-- ✅ 复杂逻辑必须有注释
-- ✅ 遵循PEP 8代码风格
+-  所有公开方法必须有docstring
+-  复杂逻辑必须有注释
+-  遵循 PEP 8 代码风格
 
 ### 性能要求:
-- ✅ 避免重复调用API
-- ✅ 合理处理大数据集
-- ✅ 使用 pandas 而不是循环处理数据
+-  避免重复调用API
+-  合理处理大数据集
+-  使用 pandas 而不是循环处理数据
 
 ### 错误处理:
-- ✅ 优雅降级,不崩溃
-- ✅ 打印有意义的错误信息
-- ✅ 返回空数据而不是抛出异常
+-  优雅降级,不崩溃
+-  打印有意义的错误信息
+-  返回空数据而不是抛出异常
 
 ---
 
 ## 禁止事项 (Don'ts)
 
 ### 绝对禁止:
-- ❌ 修改包管理器 (必须用uv)
-- ❌ 降级Python版本 (必须3.13+)
-- ❌ 引入AKShare以外的金融数据源
-- ❌ 在采集器中直接写文件/数据库
-- ❌ 硬编码敏感信息
-- ❌ 忽略错误处理
+-  修改包管理器 (必须用uv)
+-  降级Python版本 (必须3.13+)
+-  引入AKShare以外的金融数据源
+-  在采集器中直接写文件/数据库
+-  硬编码敏感信息
+-  忽略错误处理
 
 ### 强烈不建议:
-- ⚠️ 采集器方法过于复杂 (拆分)
-- ⚠️ 单个文件超过500行 (分模块)
-- ⚠️ 方法参数过多 (使用配置对象)
-- ⚠️ 深层嵌套 (重构)
+-  采集器方法过于复杂 (拆分)
+-  单个文件超过500行 (分模块)
+-  方法参数过多 (使用配置对象)
+-  深层嵌套 (重构)
 
 ---
 
@@ -285,5 +308,5 @@ uv run python tests/test_xxx.py
 
 ---
 
-**规则版本**: 1.0  
-**最后更新**: 2025-12-23
+**规则版本**: 1.1  
+**最后更新**: 2025-12-27
