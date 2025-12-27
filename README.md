@@ -32,7 +32,8 @@ finance-crawler/
 │   │   ├── indices.py         # A股指数采集器
 │   │   ├── global_index.py    # 全球指数采集器
 │   │   ├── sentiment.py       # 情绪指数采集器
-│   │   └── metals.py          # 贵金属采集器
+│   │   ├── metals.py          # 贵金属采集器
+│   │   └── shishixinwen.py    # 实事新闻 (AI 深度解析) 采集器
 │   └── main.py                # 主程序入口
 ├── tests/                     # 测试和示例文件
 ├── pyproject.toml             # 项目配置和依赖
@@ -99,6 +100,13 @@ finance-crawler/
 #### 5. MetalsCollector (贵金属采集器)
 **文件**: src/collectors/metals.py  
 **功能**: 采集贵金属价格数据
+
+#### 6. ShishixinwenCollector (实事新闻采集器)
+**文件**: src/collectors/shishixinwen.py  
+**功能**: 采集 shishixinwen.news 全球快讯及 AI 深度解析数据
+**主要方法**:
+- get_news() - 获取单页快讯（含 AI 解析）
+- get_all_news() - 批量获取历史快讯
 
 ---
 

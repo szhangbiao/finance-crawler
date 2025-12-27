@@ -1,7 +1,5 @@
 ---
 trigger: always_on
-glob: "**/*"
-alwaysApply: true
 ---
 
 # finance-crawler 项目开发规则
@@ -11,12 +9,14 @@ alwaysApply: true
 ### 技术栈 (不可更改)
 - **Python版本**: 必须使用 Python 3.13+
 - **包管理器**: 只能使用 `uv`,禁止使用 pip/poetry
-- **数据源**: 只能使用 AKShare 库,不引入其他金融数据源
+- **数据源**: 目前使用 AKShare 库，后续考虑加入其他数据源
 - **数据处理**: 使用 pandas 处理数据
 
 ### 项目结构 (严格遵守)
 ```
-src/collectors/    # 所有采集器必须放这里
+src/collectors/    # 所有数据采集器放这里
+src/processors/    # 所有的数据处理器放在这里
+src/storage/       # 数据存储处理放在这里，包括调用外部API把数据放到其他地方
 tests/            # 所有测试文件必须放这里  
 docs/             # 所有文档必须放这里
 ```
