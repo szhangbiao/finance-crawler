@@ -4,6 +4,8 @@ from .metals import MetalsCollector
 from .sentiment import SentimentIndexCollector
 from .global_index import GlobalIndexCollector
 from .shishixinwen import ShishixinwenCollector
+from .calendar import CalendarCollector
+from .intraday import IntradayCollector
 
 __all__ = [
     "NewsCollector",
@@ -11,5 +13,7 @@ __all__ = [
     "MetalsCollector",
     "SentimentIndexCollector",
     "GlobalIndexCollector",
-    "ShishixinwenCollector"
+    "ShishixinwenCollector",
+    "CalendarCollector",
+    "IntradayCollector"
 ]

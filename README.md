@@ -33,7 +33,8 @@ finance-crawler/
 │   │   ├── global_index.py    # 全球指数采集器
 │   │   ├── sentiment.py       # 情绪指数采集器
 │   │   ├── metals.py          # 贵金属采集器
-│   │   └── shishixinwen.py    # 实事新闻 (AI 深度解析) 采集器
+│   │   ├── shishixinwen.py    # 实事新闻 (AI 深度解析) 采集器
+│   │   └── calendar.py        # 财经日历 (议息/交割日) 采集器
 │   └── main.py                # 主程序入口
 ├── tests/                     # 测试和示例文件
 ├── pyproject.toml             # 项目配置和依赖
@@ -104,6 +105,14 @@ finance-crawler/
 #### 6. ShishixinwenCollector (实事新闻采集器)
 **文件**: src/collectors/shishixinwen.py  
 **功能**: 采集 shishixinwen.news 全球快讯及 AI 深度解析数据
+
+#### 7. CalendarCollector (财经日历采集器) ⭐
+**文件**: src/collectors/calendar.py  
+**功能**: 获取未来财经大事件、经济数据、央行会议及交割日
+**主要方法**:
+- get_economic_calendar() - 获取日历详情
+- get_upcoming_major_events() - 汇总重大事件
+- get_futures_delivery_dates() - 计算期指交割日
 **主要方法**:
 - get_news() - 获取单页快讯（含 AI 解析）
 - get_all_news() - 批量获取历史快讯
