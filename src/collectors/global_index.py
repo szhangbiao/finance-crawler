@@ -57,6 +57,20 @@ class GlobalIndexCollector:
         except Exception as e:
             print(f"Error fetching global indices: {e}")
             return pd.DataFrame()
+
+    def get_historical_data(self, symbol: str) -> pd.DataFrame:
+        """
+        获取全球指数历史日线数据.
+        注意: AKShare 的 index_global_hist_em 接口 symbol 参数应为指数名称 (如 '标普500').
+        
+        Args:
+            symbol: 指数名称, 如 '标普500', '纳斯达克', '日经225', '越南胡志明'.
+        """
+        try:
+            return ak.index_global_hist_em(symbol=symbol)
+        except Exception as e:
+            print(f"Error fetching global historical data for {symbol}: {e}")
+            return pd.DataFrame()
     
     def get_index_name_table(self) -> pd.DataFrame:
         """

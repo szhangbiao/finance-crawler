@@ -1,2 +1,6 @@
 src/__pycache__
 src/collectors/__pycache__
+src/processors/__pycache__
+src/storage/__pycache__
+src/utils/__pycache__
+
